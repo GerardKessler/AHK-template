@@ -15,3 +15,7 @@ Cuando llamamos a la función "commands" se realiza otra lectura del archivo ini
 Esta plantilla también incluye otro módulo llamado "speak.ahk" dentro de la carpeta tts, el cual contiene 2 funciones; "speak" y "mute". El primero para realizar la lectura de un string, el segundo para callar al sintetizador.
 Lo que hace es verificar la existencia del proceso jfw.exe. Si Jaws está activo, cada vez que se llame a la función "speak", esta va a pasarle el texto al objeto com de Jaws para que realice las verbalizaciones recibidas. De lo contrario el texto es enviado a la dll de NVDA.
 Esta verificación se realiza una sola vez al comenzar el script para evitar la constante consulta al gestor de procesos del sistema operativo, por lo que si el usuario cambia de lector de pantallas mientras utiliza el script es necesario que se reinicie el mismo para que vuelva a verificar que lector es el activo. 
+
+### demostración en audio:
+En el artículo siguiente hay una demostración de la plantilla aplicada en un sencillo script.
+[Visitar la publicación](http://ReaperYOtrasYerbas.com/novedades.php?file=tutorialesAHKFiles/ahk-template)  
