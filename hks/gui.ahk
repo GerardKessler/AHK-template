@@ -1,28 +1,29 @@
-﻿AbrirLaListaDeComandos(fila:=1) {
+﻿commands(fila:=1) {
+	global hks
 	gui, List:Default
 	Gui, List:Add, ListView,, Comando|Atajo: 
 	iniRead, file, hks\config.ini
-	loop, parse, file, `n`r
+	for i, key in strSplit(file, "`n")
 	{
-		iniRead, content, hks\config.ini,% a_loopField, hk
-		content := strReplace(content, "^", "control, ")
-		content := strReplace(content, "+", "shift, ")
-		content := strReplace(content, "!", "alt, ")
-		content := strReplace(content, "home", "inicio")
-		content := strReplace(content, "end", "fin")
-		content := strReplace(content, "PgUp", "Avance de página")
-		content := strReplace(content, "PgDn", "Retroceso de página")
-		content := strReplace(content, "right", "Flecha derecha")
-		content := strReplace(content, "left", "Flecha izquierda")
-		content := strReplace(content, "up", "Flecha arriba")
-		content := strReplace(content, "down", "Flecha abajo")
-		LV_Add("",a_loopField,content)
+		iniRead, value, hks\config.ini,% key, hk
+		value := strReplace(value, "^", "control, ")
+		value := strReplace(value, "+", "shift, ")
+		value := strReplace(value, "!", "alt, ")
+		value := strReplace(value, "home", "inicio")
+		value := strReplace(value, "end", "fin")
+		value := strReplace(value, "PgUp", "Avance de página")
+		value := strReplace(value, "PgDn", "Retroceso de página")
+		value := strReplace(value, "right", "Flecha derecha")
+		value := strReplace(value, "left", "Flecha izquierda")
+		value := strReplace(value, "up", "Flecha arriba")
+		value := strReplace(value, "down", "Flecha abajo")
+		LV_Add("", hks[i][3], value)
 	}
 	LV_Modify(fila, "Focus")
 	LV_Modify(fila, "Select")
 	gui, List:add, button, gConfig, Cambiar el atajo de teclado
 	gui, List:add, button, gClose, Cerrar
-	gui, list:show,, Lista de comandos
+	gui, list:show,, Lista de commandos
 }
 
 close() {
@@ -48,12 +49,12 @@ save() {
 	gui, config:submit, hide
 	if newHK
 	{
-		iniWrite, %newHK%, hks\config.ini, %comando%, hk
-		hotkey, %oldHK%, %comando%, off
-		hotkey, %newHK%, %comando%, on
+		iniWrite,% newHK, hks\config.ini,% comando, hk
+		hotkey,% oldHK,% comando, off
+		hotkey,% newHK,% comando, on
 		gui, config:destroy
 		fileRead()
-		AbrirLaListaDeComandos(fila)
+		commands(fila)
 	} else {
 		msgBox, 0, Atención; , Este campo no puede quedar vacío, por favor ingrese un atajo.
 		gui, show,, Configuración

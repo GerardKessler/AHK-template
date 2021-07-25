@@ -6,18 +6,15 @@ else
 fileCreate() {
 	global hks
 	for k, value in hks
-	{
-		element := strSplit(value, ",")
-		iniWrite,% element[1], hks\config.ini,% element[2], hk
-	}
+		iniWrite,% value[1], hks\config.ini,% value[2], hk
 	fileRead()
 }
 
 fileRead() {
 	iniRead, iniContent, hks\config.ini
-	loop, parse, iniContent, `n`r
+	for i, key in strSplit(iniContent, "`n")
 	{
-		iniRead, hk, hks\config.ini, %a_loopField%, hk
-		hotkey, %hk%, %a_loopField%, on
+		iniRead, hk, hks\config.ini,% key, hk
+		hotkey,% hk,% key, on
 	}
 }
