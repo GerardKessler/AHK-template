@@ -25,7 +25,6 @@ soundBeep, 880, 15
 return
 
 grave:
-
 soundBeep, 440, 15
 return
 
