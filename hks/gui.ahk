@@ -1,4 +1,4 @@
-﻿commands(fila:=1) {
+﻿commands(row:=1) {
 	global hks
 	gui, List:Default
 	Gui, List:Add, ListView,, Comando|Atajo: 
@@ -19,8 +19,8 @@
 		value := strReplace(value, "down", "Flecha abajo")
 		LV_Add("", hks[i][3], value)
 	}
-	LV_Modify(fila, "Focus")
-	LV_Modify(fila, "Select")
+	LV_Modify(row, "Focus")
+	LV_Modify(row, "Select")
 	gui, List:add, button, gConfig, Cambiar el atajo de teclado
 	gui, List:add, button, gClose, Cerrar
 	gui, list:show,, Lista de commandos
@@ -31,27 +31,26 @@ close() {
 }
 
 config() {
-	global oldHK, newHK, comando, fila
+	global oldHK, newHK, hks, fila
 	fila := lv_getNext()
-	lv_getText(comando, fila)
-	iniRead, oldHK, hks\config.ini, %comando%, hk
+	iniRead, oldHK, hks\config.ini,% hks[fila][2], hk
 	gui, list:destroy
 	gui, config:default
 	gui, config:add, text,, Ingresa un nuevo atajo de teclado
-	gui, config:add, hotKey, vnewHK, %oldHK%
+	gui, config:add, hotKey, vnewHK,% oldHK
 	gui, config:add, button, gSave, Guardar los cambios
 	gui, config:add, button, gCancel, Cancelar
 	gui, config:show,, Configuración
 }
 
 save() {
-	global newHK, oldHK, comando, fila
+	global newHK, oldHK, hks, fila
 	gui, config:submit, hide
 	if newHK
 	{
-		iniWrite,% newHK, hks\config.ini,% comando, hk
-		hotkey,% oldHK,% comando, off
-		hotkey,% newHK,% comando, on
+		iniWrite,% newHK, hks\config.ini,% hks[fila][2], hk
+		hotkey,% oldHK,% hks[fila][2], off
+		hotkey,% newHK,% hks[fila][2], on
 		gui, config:destroy
 		fileRead()
 		commands(fila)
