@@ -2,26 +2,26 @@
 If ErrorLevel != 0
 	jfw := True
 else
-			jfw := False
+	jfw := False
 if main
-speak(main)
+	speak(main)
 
 Speak(Str) {
-		global jfw
-		if (jfw = True) {
+	global jfw
+	if (jfw = True) {
 		Jaws := ComObjCreate("FreedomSci.JawsApi")
 		Jaws.SayString(Str)
 	} else {
 		return DllCall("tts\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_speakText", "wstr", Str)
-		}
 	}
+}
 
 mute() {
-	 global jfw
+	global jfw
 	if (jfw=True) {
-	Jaws := ComObjCreate("FreedomSci.JawsApi")
+		Jaws := ComObjCreate("FreedomSci.JawsApi")
 		Jaws.RunFunction("speechoff")
 	} else {
 		return DllCall("tts\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_cancelSpeech")
-		}
 	}
+}

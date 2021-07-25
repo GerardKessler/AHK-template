@@ -3,7 +3,7 @@ hks := ["+q,CerrarElScript"
 ,"f3,grave"
 ,"f2,medio"
 ,"f1,agudo"
-,"+f1,ListaDeComandos"]
+,"+f1,AbrirLaListaDeComandos"]
 
 ; variable opcional para verbalizar algo al inicio
 main = script iniciado
