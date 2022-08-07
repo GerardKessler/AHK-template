@@ -63,3 +63,11 @@ save() {
 cancel() {
 	gui, config:destroy
 }
+
+configGuiEscape:
+gui, config:destroy
+return
+
+ListGuiEscape:
+gui, list:destroy
+return
