@@ -12,7 +12,7 @@ Speak(Str) {
 		Jaws := ComObjCreate("FreedomSci.JawsApi")
 		Jaws.SayString(Str)
 	} else {
-		return DllCall("tts\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_speakText", "wstr", Str)
+		return DllCall("files\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_speakText", "wstr", Str)
 	}
 }
 
@@ -22,6 +22,6 @@ mute() {
 		Jaws := ComObjCreate("FreedomSci.JawsApi")
 		Jaws.RunFunction("speechoff")
 	} else {
-		return DllCall("tts\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_cancelSpeech")
+		return DllCall("files\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_cancelSpeech")
 	}
 }
