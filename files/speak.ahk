@@ -1,24 +1,27 @@
-﻿jaws := ComObjCreate("FreedomSci.JawsApi")
-sapi := ComObjCreate("Sapi.SpVoice")
+﻿Process, Exist, jfw.exe
+If ErrorLevel != 0
+	jfw := True
+else
+	jfw := False
+if main
+	speak(main)
 
 Speak(Str) {
-	global jfw, sapi
-	Process, Exist, jfw.exe
-	if (ErrorLevel) {
+	global jfw
+	if (jfw = True) {
+		Jaws := ComObjCreate("FreedomSci.JawsApi")
 		Jaws.SayString(Str)
-		return
-	}
-	process, exist, nvda.exe
-	if (ErrorLevel) {
+	} else {
 		return DllCall("files\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_speakText", "wstr", Str)
-		return
 	}
-	sapi.speak(str)
 }
 
 mute() {
 	global jfw
-	Jaws := ComObjCreate("FreedomSci.JawsApi")
-	Jaws.RunFunction("speechoff")
-	return DllCall("files\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_cancelSpeech")
+	if (jfw=True) {
+		Jaws := ComObjCreate("FreedomSci.JawsApi")
+		Jaws.RunFunction("speechoff")
+	} else {
+		return DllCall("files\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_cancelSpeech")
+	}
 }
