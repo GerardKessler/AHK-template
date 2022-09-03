@@ -5,13 +5,11 @@ hks := [["^+q", "exit", "Cierra el script"]
 ,["^+s", "suspend", "Suspender y reanudar el script"]
 ,["^+f1", "commands", "Abrir la lista de comandos"]]
 
-; variable opcional para verbalizar algo al inicio
-main = script iniciado
-
 ; Incluímos los módulos necesarios
-#include hks\hotkeys.ahk
-#include hks\gui.ahk
-#include tts\speak.ahk
+#include files\hotkeys.ahk
+#include files\speak.ahk
+
+speak("Script iniciado")
 return
 
 ;todo el código del script utilizando las etiquetas especificadas en la lista de la variable hks

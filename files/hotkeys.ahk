@@ -1,11 +1,32 @@
-﻿commands(row:=1) {
+﻿IfNotExist, files\config.ini
+	fileCreate()
+else
+	fileRead()
+
+fileCreate() {
+	global hks
+	for k, value in hks
+		iniWrite,% value[1], files\config.ini,% value[2], hk
+	fileRead()
+}
+
+fileRead() {
+	iniRead, iniContent, files\config.ini
+	for i, key in strSplit(iniContent, "`n")
+	{
+		iniRead, hk, files\config.ini,% key, hk
+		hotkey,% hk,% key, on
+	}
+}
+
+commands(row:=1) {
 	global hks
 	gui, List:Default
 	Gui, List:Add, ListView,, Comando|Atajo: 
-	iniRead, file, hks\config.ini
+	iniRead, file, files\config.ini
 	for i, key in strSplit(file, "`n")
 	{
-		iniRead, value, hks\config.ini,% key, hk
+		iniRead, value, files\config.ini,% key, hk
 		value := strReplace(value, "^", "control, ")
 		value := strReplace(value, "+", "shift, ")
 		value := strReplace(value, "!", "alt, ")
@@ -33,7 +54,7 @@ close() {
 config() {
 	global oldHK, newHK, hks, fila
 	fila := lv_getNext()
-	iniRead, oldHK, hks\config.ini,% hks[fila][2], hk
+	iniRead, oldHK, files\config.ini,% hks[fila][2], hk
 	gui, list:destroy
 	gui, config:default
 	gui, config:add, text,, Ingresa un nuevo atajo de teclado
@@ -48,7 +69,7 @@ save() {
 	gui, config:submit, hide
 	if newHK
 	{
-		iniWrite,% newHK, hks\config.ini,% hks[fila][2], hk
+		iniWrite,% newHK, files\config.ini,% hks[fila][2], hk
 		hotkey,% oldHK,% hks[fila][2], off
 		hotkey,% newHK,% hks[fila][2], on
 		gui, config:destroy
@@ -65,9 +86,7 @@ cancel() {
 }
 
 configGuiEscape:
-gui, config:destroy
-return
-
 ListGuiEscape:
+gui, config:destroy
 gui, list:destroy
 return
