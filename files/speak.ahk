@@ -1,26 +1,29 @@
-﻿Process, Exist, jfw.exe
-If ErrorLevel != 0
-	jfw := True
-else
-	jfw := False
-if main
-	speak(main)
+﻿if main_message
+	speak(main_message)
+
+processExist() {
+	Process, Exist, jfw.exe
+	If (ErrorLevel) {
+		JAWS := ComObjCreate("FreedomSci.JawsApi")
+		return JAWS
+	} else {
+		return False
+	}
+}
 
 Speak(Str) {
-	global jfw
-	if (jfw = True) {
-		Jaws := ComObjCreate("FreedomSci.JawsApi")
-		Jaws.SayString(Str)
+	jaws := processExist()
+	if (jaws) {
+		jaws.SayString(Str)
 	} else {
 		return DllCall("files\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_speakText", "wstr", Str)
 	}
 }
 
 mute() {
-	global jfw
-	if (jfw=True) {
-		Jaws := ComObjCreate("FreedomSci.JawsApi")
-		Jaws.RunFunction("speechoff")
+	jaws := processExist()
+	if (jaws) {
+		jaws.RunFunction("speechoff")
 	} else {
 		return DllCall("files\nvdaControllerClient" A_PtrSize*8 ".dll\nvdaController_cancelSpeech")
 	}

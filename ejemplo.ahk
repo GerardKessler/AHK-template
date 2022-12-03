@@ -23,7 +23,7 @@ hks[4] := ["^+s", "suspend", lang["suspend"]]
 hks[5] := ["^+f1", "commands", lang["command_list"]]
 
 ; variable opcional para verbalizar algo al inicio
-main := lang["script_open"]
+main_message := lang["script_open"]
 
 ; Menú de la bandeja de sistemas con los idiomas y los elementos a gusto
 Menu, Tray, NoStandard    ;Quitamos los botones por defecto del menú
