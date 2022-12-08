@@ -22,29 +22,30 @@ fileRead() {
 commands(row:=1) {
 	global hks, lang
 	gui, List:Default
-	Gui, List:Add, ListView,,% lang["command"] "|" lang["hk"] ":" 
+	Gui, List:Add, ListView,, Comando|Atajo
 	iniRead, file, files\hotkeys.ini
 	for i, key in strSplit(file, "`n")
 	{
 		iniRead, value, files\hotkeys.ini,% key, hk
-		value := strReplace(value, "^", lang["control"])
-		value := strReplace(value, "+", lang["shift"])
-		value := strReplace(value, "!", lang["alt"])
-		value := strReplace(value, "home", lang["home"])
-		value := strReplace(value, "end", lang["end"])
-		value := strReplace(value, "PgUp", lang["PGUp"])
-		value := strReplace(value, "PgDn", lang["PGDown"])
-		value := strReplace(value, "right", lang["right"])
-		value := strReplace(value, "left", lang["left"])
-		value := strReplace(value, "up", lang["up"])
-		value := strReplace(value, "down", lang["down"])
+		value := strReplace(value, "^", "Control, ")
+		value := strReplace(value, "#", "Windows, ")
+		value := strReplace(value, "+", "shift, ")
+		value := strReplace(value, "!", "alt, ")
+		value := strReplace(value, "home", "inicio")
+		value := strReplace(value, "end", "fin")
+		value := strReplace(value, "PgUp", "avance de página")
+		value := strReplace(value, "PgDn", "retroceso de página")
+		value := strReplace(value, "right", "flecha derecha")
+		value := strReplace(value, "left", "flecha izquierda")
+		value := strReplace(value, "up", "flecha arriba")
+		value := strReplace(value, "down", "flecha abajo")
 		LV_Add("", hks[i][3], value)
 	}
 	LV_Modify(row, "Focus")
 	LV_Modify(row, "Select")
-	gui, List:add, button, gConfig,% lang["changeHK"]
-	gui, List:add, button, gClose,% lang["close"]
-	gui, list:show,,% lang["commands_list"]
+	gui, List:add, button, gConfig, Cambiar el atajo
+	gui, List:add, button, gClose, Cerrar
+	gui, list:show,, Lista de comandos
 }
 
 close() {
@@ -57,11 +58,11 @@ config() {
 	iniRead, oldHK, files\hotkeys.ini,% hks[fila][2], hk
 	gui, list:destroy
 	gui, config:default
-	gui, config:add, text,,% lang["new_hk"]
+	gui, config:add, text,, Nuevo atajo de teclado
 	gui, config:add, hotKey, vnewHK,% oldHK
-	gui, config:add, button, gSave,% lang["save_changes"]
-	gui, config:add, button, gCancel,% lang["cancel"]
-	gui, config:show,,% lang["setting"]
+	gui, config:add, button, gSave, Guardar cambios
+	gui, config:add, button, gCancel, Cancelar
+	gui, config:show,, Configuraciones
 }
 
 save() {
@@ -76,8 +77,8 @@ save() {
 		fileRead()
 		commands(fila)
 	} else {
-		msgBox, 0,% lang["attention"],% lang["attention_message"]
-		gui, show,,% lang["setting"]
+		msgBox, 0, Atención, Este campo no puede quedar vacío, por favor ingrese un atajo.
+		gui, show,, Configuración
 	}
 }
 
