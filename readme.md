@@ -5,6 +5,7 @@ Con solo crear un array con la lista de los atajos y sus correspondientes accion
 En la carpeta podrán encontrar un archivo llamado "ejemplo.ahk", el cual tiene un código base con comentarios para  utilizarlo como guía.
 nota:  
 Es conveniente tener instalado AutoHotkey en su versión de 32 bits, para no tener problemas con el uso del controlador de NVDA. Si instalamos la versión de 32, este va a funcionar en ambos sistemas. 
+En este repositorio existe otra rama llamada "simple", la cual no contiene el código de las cadenas traducibles, para simplificar el código si no se necesita la traducción.
 
 ## Gestión de atajos de teclado
 
