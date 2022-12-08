@@ -9,14 +9,9 @@ hks[5] := ["^+f1", "commands", "Abrir la lista de comandos"]
 ; variable opcional para verbalizar algo al inicio
 main_message:= "Script iniciado"
 
-; Menú de la bandeja de sistemas con los idiomas y los elementos a gusto
+; Menú de la bandeja de sistemas
 Menu, Tray, NoStandard    ;Quitamos los botones por defecto del menú
 Menu, Tray, Tip, AHK_Template    ;colocamos un nombre para el ícono
-
-Menu, idioma, Add, Spanish, setLanguage
-Menu, idioma, Add, English, setLanguage
-Menu, idioma, Add, French, setLanguage
-Menu, Tray, Add, Language, :idioma
 
 Menu, Tray, Add, Cerrar el script, exit
 
